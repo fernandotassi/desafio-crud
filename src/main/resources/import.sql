@@ -1,0 +1,1 @@
+insert into client(client_name, cpf, income, birth_date, children) values('José Figueira', '23409845698', 5000., '2000-09-02', 2);
