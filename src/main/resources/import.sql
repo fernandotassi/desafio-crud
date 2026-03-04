@@ -1,1 +1,10 @@
-insert into client(client_name, cpf, income, birth_date, children) values('José Figueira', '23409845698', 5000., '2000-09-02', 2);
+insert into client(client_name, cpf, income, birth_date, children) values('José Santos', '23409845698', 3800., '1970-09-02', 4);
+insert into client(client_name, cpf, income, birth_date, children) values('Emílio da Silva', '40692467312', 5000., '1992-03-17', 1);
+insert into client(client_name, cpf, income, birth_date, children) values('Rita de Cássia Queiróz', '03914352897', 2350., '1988-10-15', 2);
+insert into client(client_name, cpf, income, birth_date, children) values('Fabiana Souza', '15735489014', 3300., '1997-07-13', 0);
+insert into client(client_name, cpf, income, birth_date, children) values('Amélia dos Anjos', '69786058435', 2500., '1983-04-06', 2);
+insert into client(client_name, cpf, income, birth_date, children) values('Jair Teixeira', '94356712312', 4100., '1972-03-27', 1);
+insert into client(client_name, cpf, income, birth_date, children) values('Luis Castro', '67860321354', 7500., '1978-08-05', 3);
+insert into client(client_name, cpf, income, birth_date, children) values('Rogéria Braga', '10923185676', 3250., '1968-11-23', 2);
+insert into client(client_name, cpf, income, birth_date, children) values('Maicon Andrade', '43153789610', 2200., '2000-07-11', 0);
+insert into client(client_name, cpf, income, birth_date, children) values('Paula Teles', '34687656412', 3700., '1995-12-01', 1);
