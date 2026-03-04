@@ -1,0 +1,8 @@
+package com.desafios.desafio_crud.repositories.exceptions;
+
+public class ResourceNotFoundException extends RuntimeException
+{
+	private static final long serialVersionUID = 1L;
+	
+	public ResourceNotFoundException(String msg){super(msg);}
+}

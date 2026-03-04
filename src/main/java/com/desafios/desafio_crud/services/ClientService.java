@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import com.desafios.desafio_crud.dto.ClientDTO;
 import com.desafios.desafio_crud.entities.Client;
 import com.desafios.desafio_crud.repositories.ClientRepository;
+import com.desafios.desafio_crud.repositories.exceptions.ResourceNotFoundException;
 
 @Service
 public class ClientService 
@@ -25,9 +26,9 @@ public class ClientService
 	
 	@Transactional(readOnly = true)
 	public ClientDTO findById(Long id)
-	{
-		Optional<Client> clientDto = repository.findById(id);
-		Client client = clientDto.get();
+	{		 
+		Client client = repository.findById(id).orElseThrow(() -> 
+		                new ResourceNotFoundException("Recurso não encontrado"));
 		return new ClientDTO(client);
 	}
 	
@@ -54,6 +55,12 @@ public class ClientService
 		transforma(client, dto);
 		client = repository.save(client);
 		return new ClientDTO(client);
+	}
+	
+	@Transactional
+	public void delete(Long id)
+	{
+		repository.deleteById(id);
 	}
 	
 	private void transforma(Client client, ClientDTO dto)
