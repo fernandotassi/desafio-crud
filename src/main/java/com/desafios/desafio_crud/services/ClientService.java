@@ -1,22 +1,17 @@
 package com.desafios.desafio_crud.services;
 
-
-import java.awt.font.TransformAttribute;
 import java.util.Optional;
 
-import org.apache.tomcat.websocket.Transformation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.PutMapping;
-
 import com.desafios.desafio_crud.dto.ClientDTO;
 import com.desafios.desafio_crud.entities.Client;
 import com.desafios.desafio_crud.repositories.ClientRepository;
-import com.desafios.desafio_crud.repositories.exceptions.ResourceNotFoundException;
+import com.desafios.desafio_crud.services.exceptions.ResourceNotFoundException;
+import jakarta.persistence.EntityNotFoundException;
 
 @Service
 public class ClientService 
@@ -27,8 +22,8 @@ public class ClientService
 	@Transactional(readOnly = true)
 	public ClientDTO findById(Long id)
 	{		 
-		Client client = repository.findById(id).orElseThrow(() -> 
-		                new ResourceNotFoundException("Recurso não encontrado"));
+		Client client = repository.findById(id).orElseThrow(
+				() -> new ResourceNotFoundException("Cliente inexistente"));
 		return new ClientDTO(client);
 	}
 	
@@ -43,7 +38,7 @@ public class ClientService
 	public ClientDTO insert(ClientDTO dto)
 	{
 		Client client = new Client();
-		transforma(client, dto); 
+		copyDtoToClient(client, dto); 
 		repository.save(client);
 		return new ClientDTO(client);
 	}
@@ -51,19 +46,26 @@ public class ClientService
 	@Transactional
 	public ClientDTO update(Long id, ClientDTO dto)
 	{
-		Client client = repository.getReferenceById(id);
-		transforma(client, dto);
-		client = repository.save(client);
-		return new ClientDTO(client);
+		try 
+		{	
+			Client client = repository.getReferenceById(id);
+			copyDtoToClient(client, dto);
+			client = repository.save(client);
+			return new ClientDTO(client);
+		}
+		catch (EntityNotFoundException e)
+		{throw new ResourceNotFoundException("Cliente inexistente");}
 	}
 	
 	@Transactional
 	public void delete(Long id)
 	{
+		if(!repository.existsById(id))
+			throw new ResourceNotFoundException("Cliente inexistente");
 		repository.deleteById(id);
 	}
 	
-	private void transforma(Client client, ClientDTO dto)
+	private void copyDtoToClient(Client client, ClientDTO dto)
 	{
 		client.setName(dto.getName());
 		client.setCpf(dto.getCpf());

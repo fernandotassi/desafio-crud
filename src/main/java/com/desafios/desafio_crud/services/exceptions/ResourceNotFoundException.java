@@ -1,4 +1,4 @@
-package com.desafios.desafio_crud.repositories.exceptions;
+package com.desafios.desafio_crud.services.exceptions;
 
 public class ResourceNotFoundException extends RuntimeException
 {

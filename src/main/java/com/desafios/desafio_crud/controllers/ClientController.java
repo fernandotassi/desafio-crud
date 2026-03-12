@@ -1,7 +1,6 @@
 package com.desafios.desafio_crud.controllers;
 
 import java.net.URI;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,21 +17,15 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import com.desafios.desafio_crud.DesafioCrudApplication;
 import com.desafios.desafio_crud.dto.ClientDTO;
 import com.desafios.desafio_crud.services.ClientService;
-
 import jakarta.servlet.Servlet;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController 
 {
-
-    private final DesafioCrudApplication desafioCrudApplication;
 	@Autowired
 	private ClientService servico;
-
-    ClientController(DesafioCrudApplication desafioCrudApplication) {
-        this.desafioCrudApplication = desafioCrudApplication;
-    }
 	
 	@GetMapping(value = "/{id}")
 	public ResponseEntity<ClientDTO> findById(@PathVariable Long id)
@@ -49,7 +42,7 @@ public class ClientController
 	}
 	
 	@PostMapping
-	public ResponseEntity<ClientDTO> insert(@RequestBody ClientDTO dto)
+	public ResponseEntity<ClientDTO> insert(@Valid @RequestBody ClientDTO dto)
 	{
 		ClientDTO client = servico.insert(dto);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
@@ -58,7 +51,7 @@ public class ClientController
 	}
 	
 	@PutMapping(value = "/{id}")
-	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @RequestBody ClientDTO dto)
+	public ResponseEntity<ClientDTO> update(@PathVariable Long id, @Valid @RequestBody ClientDTO dto)
 	{
 		dto = servico.update(id, dto);
 		return ResponseEntity.ok(dto);
